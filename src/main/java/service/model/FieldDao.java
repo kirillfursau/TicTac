@@ -1,36 +1,11 @@
 package service.model;
 
-import org.springframework.stereotype.Repository;
+public interface FieldDao {
+    public Figure getFigure(int x, int y);
 
-import javax.annotation.PostConstruct;
+    public void setFigure(int x, int y, Figure figureEnter);
 
-@Repository
-public class FieldDao {
-    private Figure[][] figures;
+    public Figure[][] getFigures();
 
-    public Figure getFigure(int x, int y) {
-        return figures[x][y];
-    }
-
-    public void setFigure(int x, int y, Figure figureEnter) {
-        figures[x][y] = figureEnter;
-    }
-
-    public Figure[][] getFigures() {
-        return figures;
-    }
-
-    public Figure[][] makeEmpty() {
-        for (int i = 0; i < figures.length; i++) {
-            for (int j = 0; j < figures[i].length; j++) {
-                figures[i][j] = null;
-            }
-        }
-        return figures;
-    }
-
-    @PostConstruct
-    public void init() {
-        figures = new Figure[3][3];
-    }
+    public Figure[][] makeFieldEmpty();
 }

@@ -2,13 +2,15 @@ package service.model;
 
 
 public interface FieldService {
+    FieldDaoImpl getField();
+
     Figure getNextFigure();
 
-    Figure nowFigure();
+    Figure getNowFigure();
 
     void makeMove(int x, int y);
 
-    boolean isFull();
+    boolean isFieldFull();
 
     String getWinner();
 

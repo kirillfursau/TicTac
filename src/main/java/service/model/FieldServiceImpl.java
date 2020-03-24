@@ -8,30 +8,19 @@ import java.util.stream.Stream;
 
 @Service
 public class FieldServiceImpl implements FieldService {
-    private FieldDao field;
+    private FieldDaoImpl field;
 
     @Autowired
-    public FieldServiceImpl(FieldDao field) {
+    public FieldServiceImpl(FieldDaoImpl field) {
         this.field = field;
     }
 
-    public FieldDao getField() {
+    public FieldDaoImpl getField() {
         return field;
     }
 
     @Override
-    public Figure getNextFigure() {
-        if (Arrays.stream(field.getFigures())
-                .flatMap(e -> Stream.of(e)
-                        .filter(el -> el != null))
-                .count() % 2 == 0) {
-            return Figure.X;
-        }
-        return Figure.O;
-    }
-
-    @Override
-    public Figure nowFigure() {
+    public Figure getNowFigure() {
         if (Arrays.stream(field.getFigures())
                 .flatMap(e -> Stream.of(e)
                         .filter(el -> el != null))
@@ -42,14 +31,20 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
-    public void makeMove(int x, int y) {
-        if (field.getFigure(x, y) != Figure.X && field.getFigure(x, y) != Figure.O) {
-            field.setFigure(x, y, getNextFigure());
+    public Figure getNextFigure() {
+        if (getNowFigure() == Figure.O) {
+            return Figure.X;
         }
+        return Figure.O;
     }
 
     @Override
-    public boolean isFull() {
+    public void makeMove(int x, int y) {
+        field.setFigure(x, y, getNextFigure());
+    }
+
+    @Override
+    public boolean isFieldFull() {
         return Arrays.stream(field.getFigures())
                 .flatMap(e -> Stream.of(e)
                         .filter(el -> el == null))
@@ -68,7 +63,7 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public boolean isFindWinner() {
-        if (checkVerticals(nowFigure()) || checkHorizontals(nowFigure()) || checkDiagonals(nowFigure())) {
+        if (checkVerticals(getNowFigure()) || checkHorizontals(getNowFigure()) || checkDiagonals(getNowFigure())) {
             return true;
         }
         return false;
