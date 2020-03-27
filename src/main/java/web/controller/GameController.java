@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import service.model.FieldDao;
 import service.model.FieldService;
 import service.model.FieldServiceImpl;
 
@@ -12,10 +13,12 @@ import service.model.FieldServiceImpl;
 @Controller
 public class GameController {
     private final FieldService fieldService;
+    private final FieldDao fieldDao;
 
     @Autowired
-    public GameController(FieldServiceImpl fieldServiceImpl) {
+    public GameController(FieldServiceImpl fieldServiceImpl, FieldDao fieldDao) {
         this.fieldService = fieldServiceImpl;
+        this.fieldDao = fieldDao;
     }
 
     @GetMapping(path = "/")
@@ -25,7 +28,7 @@ public class GameController {
 
     @GetMapping(path = "/draw")
     public String getPathVariable(Model model) {
-        model.addAttribute("fields", fieldService.getField().getFieldValues());
+        model.addAttribute("fields", fieldDao.getFieldValues());
         return "game-field";
     }
 
@@ -40,7 +43,7 @@ public class GameController {
             fieldService.restartGame();
             return "winner";
         }
-        model.addAttribute("fields", fieldService.getField().getFieldValues());
+        model.addAttribute("fields", fieldDao.getFieldValues());
         return "game-field";
     }
 }
