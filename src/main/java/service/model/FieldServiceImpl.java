@@ -1,41 +1,45 @@
 package service.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 @Service
+@RequiredArgsConstructor
 public class FieldServiceImpl implements FieldService {
-    private FieldDaoImpl field;
+    private final FieldDao field;
 
-    @Autowired
-    public FieldServiceImpl(FieldDaoImpl field) {
-        this.field = field;
-    }
-
-    public FieldDaoImpl getField() {
+    public FieldDao getField() {
         return field;
     }
 
-    @Override
-    public Figure getNowFigure() {
-        if (Arrays.stream(field.getFigures())
-                .flatMap(e -> Stream.of(e)
-                        .filter(el -> el != null))
-                .count() % 2 == 0) {
-            return Figure.O;
+    public void restartGame() {
+        for (int i = 0; i < field.getFieldValues().length; i++) {
+            for (int j = 0; j < field.getFieldValues()[i].length; j++) {
+                field.getFieldValues()[i][j] = null;
+            }
         }
-        return Figure.X;
     }
 
     @Override
-    public Figure getNextFigure() {
-        if (getNowFigure() == Figure.O) {
-            return Figure.X;
+    public FieldValue getNowFigure() {
+        if (Arrays.stream(field.getFieldValues())
+                .flatMap(e -> Stream.of(e)
+                        .filter(el -> el != null))
+                .count() % 2 == 0) {
+            return FieldValue.O;
         }
-        return Figure.O;
+        return FieldValue.X;
+    }
+
+    @Override
+    public FieldValue getNextFigure() {
+        if (getNowFigure() == FieldValue.O) {
+            return FieldValue.X;
+        }
+        return FieldValue.O;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public boolean isFieldFull() {
-        return Arrays.stream(field.getFigures())
+        return Arrays.stream(field.getFieldValues())
                 .flatMap(e -> Stream.of(e)
                         .filter(el -> el == null))
                 .count() == 0;
@@ -53,27 +57,20 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public String getWinner() {
-        if (getNextFigure() == Figure.O) {
-            return "X";
-        } else {
-            return "O";
-        }
+        return getNowFigure().toString();
 
     }
 
     @Override
-    public boolean isFindWinner() {
-        if (checkVerticals(getNowFigure()) || checkHorizontals(getNowFigure()) || checkDiagonals(getNowFigure())) {
-            return true;
-        }
-        return false;
+    public boolean isWinnerExist() {
+        return (checkVerticals(getNowFigure()) || checkHorizontals(getNowFigure()) || checkDiagonals(getNowFigure()));
     }
 
     @Override
-    public boolean checkVerticals(Figure figure) {
+    public boolean checkVerticals(FieldValue fieldValue) {
         for (int p = 0; p < 3; p++) {
-            if ((field.getFigure(p, 0) == figure && field.getFigure(p, 1) == figure &&
-                    field.getFigure(p, 2) == figure)) {
+            if ((field.getFigure(p, 0) == fieldValue && field.getFigure(p, 1) == fieldValue &&
+                    field.getFigure(p, 2) == fieldValue)) {
                 return true;
             }
         }
@@ -81,10 +78,10 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
-    public boolean checkHorizontals(Figure figure) {
+    public boolean checkHorizontals(FieldValue fieldValue) {
         for (int p = 0; p < 3; p++) {
-            if ((field.getFigure(0, p) == figure && field.getFigure(1, p) == figure &&
-                    field.getFigure(2, p) == figure)) {
+            if ((field.getFigure(0, p) == fieldValue && field.getFigure(1, p) == fieldValue &&
+                    field.getFigure(2, p) == fieldValue)) {
                 return true;
             }
         }
@@ -92,13 +89,12 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
-    public boolean checkDiagonals(Figure figure) {
-        if ((field.getFigure(0, 0) == figure && field.getFigure(1, 1)
-                == figure && field.getFigure(2, 2) == figure) ||
-                (field.getFigure(2, 0) == figure && field.getFigure(1, 1)
-                        == figure && field.getFigure(0, 2) == figure)) {
-            return true;
-        }
-        return false;
+    public boolean checkDiagonals(FieldValue fieldValue) {
+        return ((field.getFigure(0, 0) == fieldValue &&
+                field.getFigure(1, 1) == fieldValue &&
+                field.getFigure(2, 2) == fieldValue)
+                || (field.getFigure(2, 0) == fieldValue &&
+                field.getFigure(1, 1) == fieldValue &&
+                field.getFigure(0, 2) == fieldValue));
     }
 }

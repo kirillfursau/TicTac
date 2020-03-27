@@ -1,5 +1,5 @@
 package service.model;
 
-public enum Figure {
+public enum FieldValue {
     X, O
 }

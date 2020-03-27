@@ -1,11 +1,10 @@
 package service.model;
 
 public interface FieldDao {
-    public Figure getFigure(int x, int y);
+    public FieldValue getFigure(int x, int y);
 
-    public void setFigure(int x, int y, Figure figureEnter);
+    public void setFigure(int x, int y, FieldValue fieldValueEnter);
 
-    public Figure[][] getFigures();
+    public FieldValue[][] getFieldValues();
 
-    public Figure[][] makeFieldEmpty();
 }

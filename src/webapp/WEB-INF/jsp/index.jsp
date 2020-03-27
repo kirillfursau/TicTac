@@ -12,7 +12,7 @@
 </div>
 <div class="row" style="display: flex; justify-content: center;align-items: center;">
     <input type="button" class="btn btn-secondary"
-           onclick="location.href='http://localhost:8085/TicTac_war_exploded/draw';"
+           onclick="location.href='${pageContext.request.contextPath}/draw';"
            value="Try my TicTacToe game"/>
 </div>
 </body>

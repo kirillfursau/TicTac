@@ -6,31 +6,24 @@ import javax.annotation.PostConstruct;
 
 @Repository
 public class FieldDaoImpl implements FieldDao {
-    private Figure[][] figures;
+    private FieldValue[][] fieldValues;
 
-    public Figure getFigure(int x, int y) {
-        return figures[x][y];
+    public FieldValue getFigure(int x, int y) {
+        return fieldValues[x][y];
     }
 
-    public void setFigure(int x, int y, Figure figureEnter) {
-        figures[x][y] = figureEnter;
+    public void setFigure(int x, int y, FieldValue fieldValueEnter) {
+        fieldValues[x][y] = fieldValueEnter;
     }
 
-    public Figure[][] getFigures() {
-        return figures;
+    public FieldValue[][] getFieldValues() {
+        return fieldValues;
     }
 
-    public Figure[][] makeFieldEmpty() {
-        for (int i = 0; i < figures.length; i++) {
-            for (int j = 0; j < figures[i].length; j++) {
-                figures[i][j] = null;
-            }
-        }
-        return figures;
-    }
+
 
     @PostConstruct
     public void init() {
-        figures = new Figure[3][3];
+        fieldValues = new FieldValue[3][3];
     }
 }

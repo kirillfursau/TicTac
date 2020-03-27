@@ -2,11 +2,11 @@ package service.model;
 
 
 public interface FieldService {
-    FieldDaoImpl getField();
+    FieldDao getField();
 
-    Figure getNextFigure();
+    FieldValue getNextFigure();
 
-    Figure getNowFigure();
+    FieldValue getNowFigure();
 
     void makeMove(int x, int y);
 
@@ -14,11 +14,11 @@ public interface FieldService {
 
     String getWinner();
 
-    boolean isFindWinner();
+    boolean isWinnerExist();
 
-    boolean checkVerticals(Figure figure);
+    boolean checkVerticals(FieldValue fieldValue);
 
-    boolean checkHorizontals(Figure figure);
+    boolean checkHorizontals(FieldValue fieldValue);
 
-    boolean checkDiagonals(Figure figure);
+    boolean checkDiagonals(FieldValue fieldValue);
 }

@@ -25,22 +25,22 @@ public class GameController {
 
     @GetMapping(path = "/draw")
     public String getPathVariable(Model model) {
-        model.addAttribute("fields", fieldService.getField().getFigures());
+        model.addAttribute("fields", fieldService.getField().getFieldValues());
         return "game-field";
     }
 
     @GetMapping(path = "/step/{i}/{j}")
     public String getNextStep(Model model, @PathVariable int i, @PathVariable int j) {
         fieldService.makeMove(i, j);
-        if (fieldService.isFieldFull() && !fieldService.isFindWinner()) {
+        if (fieldService.isFieldFull() && !fieldService.isWinnerExist()) {
             fieldService.getField().makeFieldEmpty();
             return "no-winner";
-        } else if (fieldService.isFindWinner()) {
+        } else if (fieldService.isWinnerExist()) {
             model.addAttribute("winner", fieldService.getWinner());
             fieldService.getField().makeFieldEmpty();
             return "winner";
         }
-        model.addAttribute("fields", fieldService.getField().getFigures());
+        model.addAttribute("fields", fieldService.getField().getFieldValues());
         return "game-field";
     }
 }
