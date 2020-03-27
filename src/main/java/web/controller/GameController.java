@@ -33,11 +33,11 @@ public class GameController {
     public String getNextStep(Model model, @PathVariable int i, @PathVariable int j) {
         fieldService.makeMove(i, j);
         if (fieldService.isFieldFull() && !fieldService.isWinnerExist()) {
-            fieldService.getField().makeFieldEmpty();
+            fieldService.restartGame();
             return "no-winner";
         } else if (fieldService.isWinnerExist()) {
             model.addAttribute("winner", fieldService.getWinner());
-            fieldService.getField().makeFieldEmpty();
+            fieldService.restartGame();
             return "winner";
         }
         model.addAttribute("fields", fieldService.getField().getFieldValues());

@@ -11,10 +11,7 @@ import java.util.stream.Stream;
 public class FieldServiceImpl implements FieldService {
     private final FieldDao field;
 
-    public FieldDao getField() {
-        return field;
-    }
-
+    @Override
     public void restartGame() {
         for (int i = 0; i < field.getFieldValues().length; i++) {
             for (int j = 0; j < field.getFieldValues()[i].length; j++) {

@@ -2,7 +2,8 @@ package service.model;
 
 
 public interface FieldService {
-    FieldDao getField();
+
+    void restartGame();
 
     FieldValue getNextFigure();
 
