@@ -90,7 +90,8 @@ public class FieldServiceImpl implements FieldService {
         return ((field.getFigure(0, 0) == fieldValue &&
                 field.getFigure(1, 1) == fieldValue &&
                 field.getFigure(2, 2) == fieldValue)
-                || (field.getFigure(2, 0) == fieldValue &&
+                ||
+                (field.getFigure(2, 0) == fieldValue &&
                 field.getFigure(1, 1) == fieldValue &&
                 field.getFigure(0, 2) == fieldValue));
     }

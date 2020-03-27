@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,8 +12,14 @@
 </head>
 <body>
 <div class="row" style="padding-top: 20%;display: flex; justify-content: center;align-items: center;">
-    <h1>The winner is ${winner}</h1>
-    <p></p>
+    <c:choose>
+        <c:when test="${winner != null}">
+            <h1>The winner is ${winner}</h1>
+        </c:when>
+        <c:otherwise>
+            <h1>You have no winner</h1>
+        </c:otherwise>
+    </c:choose>
 </div>
 <div class="row" style="display: flex; justify-content: center;align-items: center;">
     <input type="button" class="btn btn-secondary"

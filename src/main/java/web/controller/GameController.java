@@ -37,7 +37,7 @@ public class GameController {
         fieldService.makeMove(i, j);
         if (fieldService.isFieldFull() && !fieldService.isWinnerExist()) {
             fieldService.restartGame();
-            return "no-winner";
+            return "winner";
         } else if (fieldService.isWinnerExist()) {
             model.addAttribute("winner", fieldService.getWinner());
             fieldService.restartGame();
