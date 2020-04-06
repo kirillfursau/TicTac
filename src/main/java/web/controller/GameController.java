@@ -44,6 +44,6 @@ public class GameController {
             return "winner";
         }
         model.addAttribute("fields", fieldDao.getFieldValues());
-        return "game-field";
+        return "redirect:/draw";
     }
 }

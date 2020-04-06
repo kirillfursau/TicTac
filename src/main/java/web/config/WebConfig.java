@@ -30,6 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
         bean.setSuffix(".jsp");
         return bean;
     }
+
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

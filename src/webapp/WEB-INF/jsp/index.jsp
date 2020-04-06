@@ -1,4 +1,6 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head><title>Welcome page</title></head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -16,6 +18,8 @@
            onclick="location.href='${pageContext.request.contextPath}/draw';"
            value="<fmt:message key="label.start_game"/>"/>
 </div>
+<li><a href="?lang=en_US"><fmt:message key="label.lang.en"/></a></li>
+<li><a href="?lang=ru_RU"><fmt:message key="label.lang.ru"/></a></li>
 </body>
 
 </html>
